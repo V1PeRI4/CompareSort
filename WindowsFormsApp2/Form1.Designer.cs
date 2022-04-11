@@ -45,9 +45,9 @@
             this.ProgressBarInsertSort = new System.Windows.Forms.ProgressBar();
             this.ProgressBarSelectionSort = new System.Windows.Forms.ProgressBar();
             this.BWGenerateMass = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
-            this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
+            this.BWBubSort = new System.ComponentModel.BackgroundWorker();
+            this.BWInsertSort = new System.ComponentModel.BackgroundWorker();
+            this.BWSelectSort = new System.ComponentModel.BackgroundWorker();
             this.panelResult = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox4 = new System.Windows.Forms.ListBox();
@@ -220,29 +220,29 @@
             this.BWGenerateMass.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BWGenerateMass_DoWork);
             this.BWGenerateMass.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BWGenerateMass_RunWorkerCompleted);
             // 
-            // backgroundWorker2
+            // BWBubSort
             // 
-            this.backgroundWorker2.WorkerReportsProgress = true;
-            this.backgroundWorker2.WorkerSupportsCancellation = true;
-            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
-            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
-            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            this.BWBubSort.WorkerReportsProgress = true;
+            this.BWBubSort.WorkerSupportsCancellation = true;
+            this.BWBubSort.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.BWBubSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
+            this.BWBubSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
             // 
-            // backgroundWorker3
+            // BWInsertSort
             // 
-            this.backgroundWorker3.WorkerReportsProgress = true;
-            this.backgroundWorker3.WorkerSupportsCancellation = true;
-            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
-            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
-            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
+            this.BWInsertSort.WorkerReportsProgress = true;
+            this.BWInsertSort.WorkerSupportsCancellation = true;
+            this.BWInsertSort.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
+            this.BWInsertSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
+            this.BWInsertSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
             // 
-            // backgroundWorker4
+            // BWSelectSort
             // 
-            this.backgroundWorker4.WorkerReportsProgress = true;
-            this.backgroundWorker4.WorkerSupportsCancellation = true;
-            this.backgroundWorker4.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker4_DoWork);
-            this.backgroundWorker4.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker4_ProgressChanged);
-            this.backgroundWorker4.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker4_RunWorkerCompleted);
+            this.BWSelectSort.WorkerReportsProgress = true;
+            this.BWSelectSort.WorkerSupportsCancellation = true;
+            this.BWSelectSort.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker4_DoWork);
+            this.BWSelectSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker4_ProgressChanged);
+            this.BWSelectSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker4_RunWorkerCompleted);
             // 
             // panelResult
             // 
@@ -491,9 +491,9 @@
         private System.Windows.Forms.ProgressBar ProgressBarInsertSort;
         private System.Windows.Forms.ProgressBar ProgressBarSelectionSort;
         private System.ComponentModel.BackgroundWorker BWGenerateMass;
-        private System.ComponentModel.BackgroundWorker backgroundWorker2;
-        private System.ComponentModel.BackgroundWorker backgroundWorker3;
-        private System.ComponentModel.BackgroundWorker backgroundWorker4;
+        private System.ComponentModel.BackgroundWorker BWBubSort;
+        private System.ComponentModel.BackgroundWorker BWInsertSort;
+        private System.ComponentModel.BackgroundWorker BWSelectSort;
         private System.Windows.Forms.Panel panelResult;
         private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Button btnClearListBox;

@@ -17,12 +17,9 @@ namespace WindowsFormsApp2
         /*--------------------------Обьявление переменных--------------------------*/
 
         int[] array;       // Изначальный массив
-        //int[] arrayBub;
-        //int[] arrayIns;    // сортировки вставкой
-        //int[] arraySel;    // сортировки выбором
         int countElOfMass;
 
-        TimeSpan tsBubble; // пузырька время начала
+        TimeSpan tsBubble; // пузырек время начала
         TimeSpan tsIns;    // вставка
         TimeSpan tsSel;    // выбор
 
@@ -30,7 +27,9 @@ namespace WindowsFormsApp2
         bool fCancelInsSort = false;
         bool fCancelSelSort = false;
 
+
         /*--------------------------Обьявление формы--------------------------*/
+
         public Form1()
         {
             InitializeComponent();
@@ -54,8 +53,7 @@ namespace WindowsFormsApp2
         // Кнопка Создания массива
         private void btnCreateMass_Click(object sender, EventArgs e)
         {
-           btnSortMass.Enabled = true;
-
+            btnSortMass.Enabled = true;
             CleanResultValue();
 
             // Запустить генерирование массива в потоке
@@ -80,28 +78,30 @@ namespace WindowsFormsApp2
             btnCreateMass.Enabled = false;
 
             // Запуск методов сортировки в потоках
-            if (!backgroundWorker2.IsBusy)
-                backgroundWorker2.RunWorkerAsync();
-            if (!backgroundWorker3.IsBusy)
-                backgroundWorker3.RunWorkerAsync();
-            if (!backgroundWorker4.IsBusy)
-                backgroundWorker4.RunWorkerAsync();
+            if (!BWBubSort.IsBusy)
+                BWBubSort.RunWorkerAsync();
+            if (!BWInsertSort.IsBusy)
+                BWInsertSort.RunWorkerAsync();
+            if (!BWSelectSort.IsBusy)
+                BWSelectSort.RunWorkerAsync();
         }
+
 
         // Кнопка Остановки - отменить выполнение всех потоков
         private void btnStopSort_Click(object sender, EventArgs e)
         {
             try
             {
-                backgroundWorker2.CancelAsync(); // остановить сортировку пузырьком
-                backgroundWorker3.CancelAsync(); // остановить сортировку вставками
-                backgroundWorker4.CancelAsync(); // остановить сортировку выбором
+                BWBubSort.CancelAsync(); // остановить сортировку пузырьком
+                BWInsertSort.CancelAsync(); // остановить сортировку вставками
+                BWSelectSort.CancelAsync(); // остановить сортировку выбором
             }
             catch (InvalidOperationException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
 
         // Кнопка Очистки listBox'ов
         private void btnClearListBox_Click(object sender, EventArgs e)
@@ -118,15 +118,13 @@ namespace WindowsFormsApp2
             LB.Items.Add(A);
         }
 
-        // Остановка метода и возвращение времени выполнения
+
+        // Остановка метода сортировки и возвращение времени выполнения
         private string StopTime(TimeSpan methodTime)
         {
-            //Зафиксировать время и вывести его 
             TimeSpan time = new TimeSpan(DateTime.Now.Ticks) - methodTime;
-            string result = String.Format("{0}:{1}:{2}", time.Minutes,
-                time.Seconds, time.Milliseconds);
+            string result = String.Format("{0}:{1}:{2}", time.Minutes, time.Seconds, time.Milliseconds);
             return result;
-
         }
 
 
@@ -135,31 +133,17 @@ namespace WindowsFormsApp2
         ////////////////// Генерация массива
         private void BWGenerateMass_DoWork(object sender, DoWorkEventArgs e)
         {
-            // 2. Получить количество элементов в массиве
-            int n;
-            if (RBNum1000.Checked == true) { n = 1000; }
-            else if (RBNum10000.Checked == true) { n = 10000; }
-            else if (RBNum100000.Checked == true) { n = 100000; }
-            else if (RBNum1000000.Checked == true) { n = 1000000; }
-            else { n = 0; }
-            countElOfMass = n;
+            int n = countElOfMass = GetMassLenght();
 
             array = new int[n];
-            //arrayBub = new int[n];
-            //arrayIns = new int[n];
-            //arraySel = new int[n];
-
-            // 1. Объявление внутренних переменных
             Random rnd = new Random();
 
             for (int i = 0; i < n; i++)
             {
-                array[i] = rnd.Next(1, n); // случайное число
-                /*arrayBub[i] = arraySel[i] = arrayIns[i] = array[i]; */ // скопировать это число
-
-                // Вызвать отображение прогресса (изменения) выполнения потока
+                array[i] = rnd.Next(1, n);
                 try
                 {
+                    // Вызвать отображение прогресса (изменения) выполнения потока
                     BWGenerateMass.ReportProgress((i * 100) / n);
                 }
                 catch (InvalidOperationException ex)
@@ -169,6 +153,17 @@ namespace WindowsFormsApp2
                 }
             }
             
+        }
+        // Получение количества элементов в массиве
+        private int GetMassLenght()
+        {
+            int n;
+            if (RBNum1000.Checked == true) { n = 1000; }
+            else if (RBNum10000.Checked == true) { n = 10000; }
+            else if (RBNum100000.Checked == true) { n = 100000; }
+            else if (RBNum1000000.Checked == true) { n = 1000000; }
+            else { n = 0; }
+            return n;
         }
         // После завершения Генерации массива
         private void BWGenerateMass_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -185,38 +180,28 @@ namespace WindowsFormsApp2
         {
             int[] arrayBub = new int[countElOfMass];
             array.CopyTo(arrayBub, 0);
-            // Сортируется массив arrayBub
 
-            int x;
+            int temp;
 
             tsBubble = new TimeSpan(DateTime.Now.Ticks);
 
             for (int i = 0; i < arrayBub.Length; i++)
             {
-
                 for (int j = arrayBub.Length - 1; j > i; j--)
                 {
                     if (arrayBub[j - 1] > arrayBub[j]) // сортировка по возрастанию
                     {
-                        x = arrayBub[j];
+                        temp = arrayBub[j];
                         arrayBub[j] = arrayBub[j - 1];
-                        arrayBub[j - 1] = x;
+                        arrayBub[j - 1] = temp;
                     }
                 }
 
                 // Отобразить изменение прогресса
-                try
-                {
-                    backgroundWorker2.ReportProgress((i * 100) / arrayBub.Length);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
-
+                ViewProgressChange(BWBubSort, arrayBub, i);
+                
                 // Проверка, был ли остановлен поток
-                if (backgroundWorker2.CancellationPending)
+                if (BWBubSort.CancellationPending)
                 {
                     fCancelBubSort = true;
                     break;
@@ -231,39 +216,31 @@ namespace WindowsFormsApp2
             int[] arrayIns = new int[countElOfMass];
             array.CopyTo(arrayIns, 0);
 
-            int x, j;
+            int temp, j;
 
             tsIns = new TimeSpan(DateTime.Now.Ticks);
 
             for (int i = 0; i < arrayIns.Length; i++)
             {
-                x = arrayIns[i];
+                temp = arrayIns[i];
 
-                for (j = i - 1; j >= 0 && arrayIns[j] > x; j--)
+                for (j = i - 1; j >= 0 && arrayIns[j] > temp; j--)
                     arrayIns[j + 1] = arrayIns[j]; // сдвинуть элемент вправо
-                arrayIns[j + 1] = x;
+                arrayIns[j + 1] = temp;
 
                 // Отобразить изменение прогресса
-                try
-                {
-                    backgroundWorker3.ReportProgress((i * 100) / arrayIns.Length);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
+                ViewProgressChange(BWInsertSort, arrayIns, i);
 
                 // Проверка, был ли остановлен поток
-                if (backgroundWorker3.CancellationPending)
+                if (BWInsertSort.CancellationPending)
                 {
                     fCancelInsSort = true;
                     break;
                 }
             }
 
-
         }
+
 
         // Сортировка выбором
         private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
@@ -271,7 +248,7 @@ namespace WindowsFormsApp2
             int[] arraySel = new int[countElOfMass];
             array.CopyTo(arraySel, 0);
 
-            int j, k;
+            int k;
             int x;
 
             tsSel = new TimeSpan(DateTime.Now.Ticks);
@@ -283,7 +260,7 @@ namespace WindowsFormsApp2
                 // поиск наименьшего элемента
                 x = arraySel[i];
 
-                for (j = i + 1; j < arraySel.Length; j++)
+                for (int j = i + 1; j < arraySel.Length; j++)
                     if (arraySel[j] < x)
                     {
                         k = j; // k - индекс наименьшего элемента
@@ -293,29 +270,18 @@ namespace WindowsFormsApp2
                 arraySel[k] = arraySel[i];
                 arraySel[i] = x;
 
-
-
-
                 // Отобразить изменение прогресса
-                //ViewProgressChange(backgroundWorker4, arraySel, i);
-                try
-                {
-                    backgroundWorker4.ReportProgress((i * 100) / arraySel.Length);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
+                ViewProgressChange(BWSelectSort, arraySel, i);
 
                 // Проверка, был ли остановлен поток
-                if (backgroundWorker4.CancellationPending)
+                if (BWSelectSort.CancellationPending)
                 {
                     fCancelSelSort = true;
                     break;
                 }
             }
         }
+
 
         private void ViewProgressChange(BackgroundWorker backgroundWorker, int[] array, int i)
         {
@@ -330,13 +296,13 @@ namespace WindowsFormsApp2
             }
         }
 
+
         // Изменение прогресса в методе сортировки пузырьком
         private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             labelProgressBubSort.Text = Convert.ToString(e.ProgressPercentage) + " %";
             ProgressBarBubSort.Value = e.ProgressPercentage;
         }
-
 
         // Прогресс для метода сортировки вставками
         private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e)
