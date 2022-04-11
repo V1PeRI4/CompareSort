@@ -129,4 +129,7 @@
   <metadata name="BWSelectSort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>491, 18</value>
   </metadata>
+  <metadata name="BWShakerSort.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>616, 18</value>
+  </metadata>
 </root>

@@ -23,9 +23,12 @@ namespace WindowsFormsApp2
         TimeSpan tsIns;    // вставка
         TimeSpan tsSel;    // выбор
 
-        bool fCancelBubSort = false; // булы для стопа сортировок
-        bool fCancelInsSort = false;
-        bool fCancelSelSort = false;
+
+
+        protected bool fCancelBubSort = false; // булы для стопа сортировок
+        protected bool fCancelInsSort = false;
+        protected bool fCancelSelSort = false;
+
 
 
         /*--------------------------Обьявление формы--------------------------*/
@@ -37,14 +40,6 @@ namespace WindowsFormsApp2
             ClearProgressBar();
             // Деактивировать панель результатов
             panelResult.Enabled = false;
-        }
-
-        // Обнуление значений в progressBar'ах
-        private void ClearProgressBar()
-        {
-            ProgressBarBubSort.Value = 0;
-            ProgressBarInsertSort.Value = 0;
-            ProgressBarSelectionSort.Value = 0;
         }
 
 
@@ -60,16 +55,7 @@ namespace WindowsFormsApp2
             if (!BWGenerateMass.IsBusy)
                 BWGenerateMass.RunWorkerAsync(); // сгенерировать событие DoWork
         }
-        // Метод очистки результатов к кнопке создания
-        private void CleanResultValue()
-        {
-            labelProgressBubSort.Text = "";
-            labelProgressInsertSort.Text = "";
-            labelProgressSelectionSort.Text = "";
-            LBBubSort.Items.Clear();
-            LBInsertSort.Items.Clear();
-            LBSelectSort.Items.Clear();
-        }
+        
 
 
         // Кнопка Сортировки - запустить потоки на выполнение
@@ -112,12 +98,30 @@ namespace WindowsFormsApp2
 
         /*--------------------------Дополнительные методы--------------------------*/
 
+        // Обнуление значений в progressBar'ах
+        private void ClearProgressBar()
+        {
+            ProgressBarBubbleSort.Value = 0;
+            ProgressBarInsertSort.Value = 0;
+            ProgressBarSelectionSort.Value = 0;
+        }
+
+        // Метод очистки результатов к кнопке создания
+        private void CleanResultValue()
+        {
+            labelProgressBubSort.Text = "";
+            labelProgressInsertSort.Text = "";
+            labelProgressSelectionSort.Text = "";
+            LBBubbleSort.Items.Clear();
+            LBInsertSort.Items.Clear();
+            LBSelectSort.Items.Clear();
+        }
+
         // Внутренний метод, который отображает массив в элементе управления типа ListBox
         private void DisplayArray(string A, ListBox LB)
         {
             LB.Items.Add(A);
         }
-
 
         // Остановка метода сортировки и возвращение времени выполнения
         private string StopTime(TimeSpan methodTime)
@@ -128,32 +132,6 @@ namespace WindowsFormsApp2
         }
 
 
-        /*--------------------------Background work'еры (кнопки и сортировки)--------------------------*/
-
-        ////////////////// Генерация массива
-        private void BWGenerateMass_DoWork(object sender, DoWorkEventArgs e)
-        {
-            int n = countElOfMass = GetMassLenght();
-
-            array = new int[n];
-            Random rnd = new Random();
-
-            for (int i = 0; i < n; i++)
-            {
-                array[i] = rnd.Next(1, n);
-                try
-                {
-                    // Вызвать отображение прогресса (изменения) выполнения потока
-                    BWGenerateMass.ReportProgress((i * 100) / n);
-                }
-                catch (InvalidOperationException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
-            }
-            
-        }
         // Получение количества элементов в массиве
         private int GetMassLenght()
         {
@@ -164,6 +142,58 @@ namespace WindowsFormsApp2
             else if (RBNum1000000.Checked == true) { n = 1000000; }
             else { n = 0; }
             return n;
+        }
+
+        private int[] FillArray(int[] array)
+        {
+            Random rnd = new Random();
+
+            if (RBRandomNum.Checked == true) 
+            {
+                for (int i = 0; i < array.Length; i++)
+                {
+                    array[i] = rnd.Next(1, array.Length);
+                }
+            }
+            else if (RBPartialSortMass.Checked == true) 
+            { 
+
+            }
+            else if (RBNum100000.Checked == true) 
+            {
+
+            }
+            else if (RBNum1000000.Checked == true) 
+            { 
+
+            }
+
+            return array;
+        }
+
+
+        private void ViewProgressChange(BackgroundWorker backgroundWorker, int[] array, int i)
+        {
+            try
+            {
+                backgroundWorker.ReportProgress((i * 100) / array.Length);
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+        /*--------------------------Background work'еры (кнопки и сортировки)--------------------------*/
+
+        ////////////////// Генерация массива
+        private void BWGenerateMass_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int n = countElOfMass = GetMassLenght();
+            array = new int[n];
+
+            array = FillArray(array);
         }
         // После завершения Генерации массива
         private void BWGenerateMass_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -176,7 +206,7 @@ namespace WindowsFormsApp2
 
 
         ////////////////// Сортировка методом пузырька - поток
-        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        private void BWBubbleSort_DoWork(object sender, DoWorkEventArgs e)
         {
             int[] arrayBub = new int[countElOfMass];
             array.CopyTo(arrayBub, 0);
@@ -211,14 +241,15 @@ namespace WindowsFormsApp2
 
 
         ////////////////// Сортировка вставками
-        private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
+        private void BWInsertSort_DoWork(object sender, DoWorkEventArgs e)
         {
             int[] arrayIns = new int[countElOfMass];
             array.CopyTo(arrayIns, 0);
 
-            int temp, j;
 
             tsIns = new TimeSpan(DateTime.Now.Ticks);
+
+            int temp, j;
 
             for (int i = 0; i < arrayIns.Length; i++)
             {
@@ -237,13 +268,14 @@ namespace WindowsFormsApp2
                     fCancelInsSort = true;
                     break;
                 }
+
             }
 
         }
-
+        
 
         // Сортировка выбором
-        private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+        private void BWSelectSort_DoWork(object sender, DoWorkEventArgs e)
         {
             int[] arraySel = new int[countElOfMass];
             array.CopyTo(arraySel, 0);
@@ -283,36 +315,25 @@ namespace WindowsFormsApp2
         }
 
 
-        private void ViewProgressChange(BackgroundWorker backgroundWorker, int[] array, int i)
-        {
-            try
-            {
-                backgroundWorker.ReportProgress((i * 100) / array.Length);
-            }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-        }
+        
 
 
         // Изменение прогресса в методе сортировки пузырьком
-        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BWBubbleSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             labelProgressBubSort.Text = Convert.ToString(e.ProgressPercentage) + " %";
-            ProgressBarBubSort.Value = e.ProgressPercentage;
+            ProgressBarBubbleSort.Value = e.ProgressPercentage;
         }
 
         // Прогресс для метода сортировки вставками
-        private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BWInsertSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             labelProgressInsertSort.Text = Convert.ToString(e.ProgressPercentage) + " %";
             ProgressBarInsertSort.Value = e.ProgressPercentage;
         }
 
         // Изменение прогресса для алгоритма сортировки выбором
-        private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BWSelectSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             labelProgressSelectionSort.Text = Convert.ToString(e.ProgressPercentage) + " %";
             ProgressBarSelectionSort.Value = e.ProgressPercentage;
@@ -320,8 +341,9 @@ namespace WindowsFormsApp2
 
         
 
+
         // Завершение сортировки методом пузырька - выполнить конечные операции
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BWBubbleSort_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Если была отмена сортировки
             if (fCancelBubSort)
@@ -332,16 +354,16 @@ namespace WindowsFormsApp2
             else
             {
                 labelProgressBubSort.Text = StopTime(tsBubble);
-                DisplayArray(labelProgressBubSort.Text, LBBubSort);
+                DisplayArray(labelProgressBubSort.Text, LBBubbleSort);
             }
 
             // Настроить другие элементы управления
-            ProgressBarBubSort.Value = 0;
+            ProgressBarBubbleSort.Value = 0;
             btnCreateMass.Enabled = true;
         }
 
         // Завершение потока сортировки вставками
-        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BWInsertSort_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Если была отмена сортировки
             if (fCancelInsSort)
@@ -361,7 +383,7 @@ namespace WindowsFormsApp2
         }
 
         // Завершение сортировки выбором
-        private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BWSelectSort_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // Если была отмена сортировки
             if (fCancelSelSort)
@@ -379,5 +401,22 @@ namespace WindowsFormsApp2
             ProgressBarSelectionSort.Value = 0;
             btnCreateMass.Enabled = true;
         }
+
+        private void BWShakerSort_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void BWShakerSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void BWShakerSort_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+   
     }
 }
