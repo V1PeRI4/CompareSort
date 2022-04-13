@@ -17,17 +17,19 @@ namespace WindowsFormsApp2
         /*--------------------------Обьявление переменных--------------------------*/
 
         int[] array;       // Изначальный массив
-        int countElOfMass;
+        int size;
 
         TimeSpan tsBubble; // пузырек время начала
         TimeSpan tsIns;    // вставка
         TimeSpan tsSel;    // выбор
+        TimeSpan tsShaker; // шейкер
 
 
 
         protected bool fCancelBubSort = false; // булы для стопа сортировок
         protected bool fCancelInsSort = false;
         protected bool fCancelSelSort = false;
+        protected bool fCancelShakerSort = false;
 
 
 
@@ -70,6 +72,8 @@ namespace WindowsFormsApp2
                 BWInsertSort.RunWorkerAsync();
             if (!BWSelectSort.IsBusy)
                 BWSelectSort.RunWorkerAsync();
+            if (!BWShakerSort.IsBusy)
+                BWShakerSort.RunWorkerAsync();
         }
 
 
@@ -81,6 +85,7 @@ namespace WindowsFormsApp2
                 BWBubSort.CancelAsync(); // остановить сортировку пузырьком
                 BWInsertSort.CancelAsync(); // остановить сортировку вставками
                 BWSelectSort.CancelAsync(); // остановить сортировку выбором
+                BWShakerSort.CancelAsync();
             }
             catch (InvalidOperationException ex)
             {
@@ -104,6 +109,7 @@ namespace WindowsFormsApp2
             ProgressBarBubbleSort.Value = 0;
             ProgressBarInsertSort.Value = 0;
             ProgressBarSelectionSort.Value = 0;
+            ProgressBarShakerSort.Value = 0;
         }
 
         // Метод очистки результатов к кнопке создания
@@ -112,9 +118,11 @@ namespace WindowsFormsApp2
             labelProgressBubSort.Text = "";
             labelProgressInsertSort.Text = "";
             labelProgressSelectionSort.Text = "";
+            labelProgressShakerSort.Text = "";
             LBBubbleSort.Items.Clear();
             LBInsertSort.Items.Clear();
             LBSelectSort.Items.Clear();
+            LBShakerSort.Items.Clear();
         }
 
         // Внутренний метод, который отображает массив в элементе управления типа ListBox
@@ -155,20 +163,44 @@ namespace WindowsFormsApp2
                     array[i] = rnd.Next(1, array.Length);
                 }
             }
-            else if (RBPartialSortMass.Checked == true) 
-            { 
-
-            }
-            else if (RBNum100000.Checked == true) 
+            else if (RBSortMass.Checked == true) 
             {
-
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = i;
             }
-            else if (RBNum1000000.Checked == true) 
-            { 
+            else if (RBReverseSortMass.Checked == true) 
+            {
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = array.Length - i;
+            }
+            else if (RBChangeInPermutation.Checked == true)
+            {
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = array.Length - i;
+            }
 
+            else if (RBSwapsMass.Checked == true) 
+            {
+                for (int i = 1; i < array.Length; i++)
+                {
+                    array[i] = rnd.Next(1, array.Length);
+                    if (array[i] % 3 == 0)
+                    {
+                        array[i - 1] = array[i];
+                    }
+                }
             }
 
             return array;
+        }
+
+
+        private void SwapElMass(int el1, int el2)
+        {
+            int temp;
+            temp = el1;
+            el1 = el2;
+            el2 = temp;
         }
 
 
@@ -190,7 +222,7 @@ namespace WindowsFormsApp2
         ////////////////// Генерация массива
         private void BWGenerateMass_DoWork(object sender, DoWorkEventArgs e)
         {
-            int n = countElOfMass = GetMassLenght();
+            int n = size = GetMassLenght();
             array = new int[n];
 
             array = FillArray(array);
@@ -208,10 +240,8 @@ namespace WindowsFormsApp2
         ////////////////// Сортировка методом пузырька - поток
         private void BWBubbleSort_DoWork(object sender, DoWorkEventArgs e)
         {
-            int[] arrayBub = new int[countElOfMass];
+            int[] arrayBub = new int[size];
             array.CopyTo(arrayBub, 0);
-
-            int temp;
 
             tsBubble = new TimeSpan(DateTime.Now.Ticks);
 
@@ -221,9 +251,10 @@ namespace WindowsFormsApp2
                 {
                     if (arrayBub[j - 1] > arrayBub[j]) // сортировка по возрастанию
                     {
-                        temp = arrayBub[j];
-                        arrayBub[j] = arrayBub[j - 1];
-                        arrayBub[j - 1] = temp;
+                        int temp;
+                        temp = arrayBub[j - 1];
+                        arrayBub[j - 1] = arrayBub[j];
+                        arrayBub[j] = temp;
                     }
                 }
 
@@ -243,9 +274,8 @@ namespace WindowsFormsApp2
         ////////////////// Сортировка вставками
         private void BWInsertSort_DoWork(object sender, DoWorkEventArgs e)
         {
-            int[] arrayIns = new int[countElOfMass];
+            int[] arrayIns = new int[size];
             array.CopyTo(arrayIns, 0);
-
 
             tsIns = new TimeSpan(DateTime.Now.Ticks);
 
@@ -277,13 +307,13 @@ namespace WindowsFormsApp2
         // Сортировка выбором
         private void BWSelectSort_DoWork(object sender, DoWorkEventArgs e)
         {
-            int[] arraySel = new int[countElOfMass];
+            int[] arraySel = new int[size];
             array.CopyTo(arraySel, 0);
+
+            tsSel = new TimeSpan(DateTime.Now.Ticks);
 
             int k;
             int x;
-
-            tsSel = new TimeSpan(DateTime.Now.Ticks);
 
             for (int i = 0; i < arraySel.Length; i++)
             {
@@ -315,7 +345,66 @@ namespace WindowsFormsApp2
         }
 
 
-        
+        // Шейкерная сортировка
+        private void BWShakerSort_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int[] arrayShaker = new int[size];
+            array.CopyTo(arrayShaker, 0);
+
+            tsShaker = new TimeSpan(DateTime.Now.Ticks);
+
+            int count = 0;
+            int leftMark = 1;
+            int rightMark = size - 1;
+            bool work = true;
+
+            while (work)
+            {
+                work = false;
+                for (int i = rightMark; i >= leftMark; i--)
+                {
+                    if (arrayShaker[i - 1] > arrayShaker[i])
+                    {
+                        int temp;
+                        temp = arrayShaker[i - 1];
+                        arrayShaker[i - 1] = arrayShaker[i];
+                        arrayShaker[i] = temp;
+                        work = true;
+                    }
+                }
+                leftMark++;
+                count++;
+
+
+
+                for (int i = leftMark; i <= rightMark; i++)
+                {
+                    if (arrayShaker[i - 1] > arrayShaker[i])
+                    {
+                        int temp;
+                        temp = arrayShaker[i - 1];
+                        arrayShaker[i - 1] = arrayShaker[i];
+                        arrayShaker[i] = temp;
+                        work = true;
+                    }
+                }
+                rightMark--;
+                count++;
+
+
+                ViewProgressChange(BWShakerSort, arrayShaker, count);
+
+                // Проверка, был ли остановлен поток
+                if (BWShakerSort.CancellationPending)
+                {
+                    fCancelShakerSort = true;
+                    break;
+                }
+            }
+        }
+
+
+
 
 
         // Изменение прогресса в методе сортировки пузырьком
@@ -339,7 +428,11 @@ namespace WindowsFormsApp2
             ProgressBarSelectionSort.Value = e.ProgressPercentage;
         }
 
-        
+        private void BWShakerSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            labelProgressShakerSort.Text = Convert.ToString(e.ProgressPercentage) + " %";
+            ProgressBarShakerSort.Value = e.ProgressPercentage;
+        }
 
 
         // Завершение сортировки методом пузырька - выполнить конечные операции
@@ -402,21 +495,32 @@ namespace WindowsFormsApp2
             btnCreateMass.Enabled = true;
         }
 
-        private void BWShakerSort_DoWork(object sender, DoWorkEventArgs e)
-        {
 
-        }
-
-        private void BWShakerSort_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-
-        }
-
+        // Завершение шейкерной сортировки
         private void BWShakerSort_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Если была отмена сортировки
+            if (fCancelShakerSort)
+            {
+                labelProgressShakerSort.Text = "";
+                fCancelShakerSort = false;
+            }
+            else
+            {
+                labelProgressShakerSort.Text = StopTime(tsShaker);
+                DisplayArray(labelProgressShakerSort.Text, LBShakerSort);
+            }
 
+            // Настроить другие элементы управления
+            ProgressBarShakerSort.Value = 0;
+            btnCreateMass.Enabled = true;
         }
 
-   
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Info info = new Info();
+            info.Show();
+
+        }
     }
 }

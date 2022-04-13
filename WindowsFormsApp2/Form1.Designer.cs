@@ -49,17 +49,17 @@
             this.BWInsertSort = new System.ComponentModel.BackgroundWorker();
             this.BWSelectSort = new System.ComponentModel.BackgroundWorker();
             this.panelResult = new System.Windows.Forms.Panel();
-            this.LabelShakerSort = new System.Windows.Forms.Label();
+            this.labelProgressShakerSort = new System.Windows.Forms.Label();
             this.LBShakerSort = new System.Windows.Forms.ListBox();
             this.ProgressBarShakerSort = new System.Windows.Forms.ProgressBar();
-            this.label8 = new System.Windows.Forms.Label();
+            this.labelShakerSort = new System.Windows.Forms.Label();
             this.panelMain = new System.Windows.Forms.Panel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnClearListBox = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.RBRandomNum = new System.Windows.Forms.RadioButton();
-            this.RBPartialSortMass = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.RBSortMass = new System.Windows.Forms.RadioButton();
+            this.RBChangeInPermutation = new System.Windows.Forms.RadioButton();
             this.RBSwapsMass = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.RBNum1000 = new System.Windows.Forms.RadioButton();
@@ -68,11 +68,15 @@
             this.RBNum1000000 = new System.Windows.Forms.RadioButton();
             this.labelTypeData = new System.Windows.Forms.Label();
             this.BWShakerSort = new System.ComponentModel.BackgroundWorker();
+            this.RBReverseSortMass = new System.Windows.Forms.RadioButton();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.panelResult.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelQuantityElMass
@@ -247,10 +251,10 @@
             // 
             // panelResult
             // 
-            this.panelResult.Controls.Add(this.LabelShakerSort);
+            this.panelResult.Controls.Add(this.labelProgressShakerSort);
             this.panelResult.Controls.Add(this.LBShakerSort);
             this.panelResult.Controls.Add(this.ProgressBarShakerSort);
-            this.panelResult.Controls.Add(this.label8);
+            this.panelResult.Controls.Add(this.labelShakerSort);
             this.panelResult.Controls.Add(this.labelProgressInsertSort);
             this.panelResult.Controls.Add(this.labelProgressSelectionSort);
             this.panelResult.Controls.Add(this.labelProgressBubSort);
@@ -265,17 +269,17 @@
             this.panelResult.Controls.Add(this.LBInsertSort);
             this.panelResult.Location = new System.Drawing.Point(34, 210);
             this.panelResult.Name = "panelResult";
-            this.panelResult.Size = new System.Drawing.Size(802, 231);
+            this.panelResult.Size = new System.Drawing.Size(659, 231);
             this.panelResult.TabIndex = 17;
             // 
-            // LabelShakerSort
+            // labelProgressShakerSort
             // 
-            this.LabelShakerSort.AutoSize = true;
-            this.LabelShakerSort.BackColor = System.Drawing.Color.Transparent;
-            this.LabelShakerSort.Location = new System.Drawing.Point(549, 168);
-            this.LabelShakerSort.Name = "LabelShakerSort";
-            this.LabelShakerSort.Size = new System.Drawing.Size(0, 13);
-            this.LabelShakerSort.TabIndex = 17;
+            this.labelProgressShakerSort.AutoSize = true;
+            this.labelProgressShakerSort.BackColor = System.Drawing.Color.Transparent;
+            this.labelProgressShakerSort.Location = new System.Drawing.Point(549, 168);
+            this.labelProgressShakerSort.Name = "labelProgressShakerSort";
+            this.labelProgressShakerSort.Size = new System.Drawing.Size(0, 13);
+            this.labelProgressShakerSort.TabIndex = 17;
             // 
             // LBShakerSort
             // 
@@ -292,14 +296,14 @@
             this.ProgressBarShakerSort.Size = new System.Drawing.Size(100, 32);
             this.ProgressBarShakerSort.TabIndex = 19;
             // 
-            // label8
+            // labelShakerSort
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(502, 26);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(126, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Шейкерная сортировка";
+            this.labelShakerSort.AutoSize = true;
+            this.labelShakerSort.Location = new System.Drawing.Point(502, 26);
+            this.labelShakerSort.Name = "labelShakerSort";
+            this.labelShakerSort.Size = new System.Drawing.Size(126, 13);
+            this.labelShakerSort.TabIndex = 16;
+            this.labelShakerSort.Text = "Шейкерная сортировка";
             // 
             // panelMain
             // 
@@ -337,8 +341,9 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.RBRandomNum);
-            this.flowLayoutPanel2.Controls.Add(this.RBPartialSortMass);
-            this.flowLayoutPanel2.Controls.Add(this.radioButton6);
+            this.flowLayoutPanel2.Controls.Add(this.RBSortMass);
+            this.flowLayoutPanel2.Controls.Add(this.RBReverseSortMass);
+            this.flowLayoutPanel2.Controls.Add(this.RBChangeInPermutation);
             this.flowLayoutPanel2.Controls.Add(this.RBSwapsMass);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(209, 53);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -356,27 +361,27 @@
             this.RBRandomNum.Text = "Случайные числа";
             this.RBRandomNum.UseVisualStyleBackColor = true;
             // 
-            // RBPartialSortMass
+            // RBSortMass
             // 
-            this.RBPartialSortMass.AutoSize = true;
-            this.RBPartialSortMass.Location = new System.Drawing.Point(121, 3);
-            this.RBPartialSortMass.Name = "RBPartialSortMass";
-            this.RBPartialSortMass.Size = new System.Drawing.Size(181, 17);
-            this.RBPartialSortMass.TabIndex = 22;
-            this.RBPartialSortMass.TabStop = true;
-            this.RBPartialSortMass.Text = "Частичная отсортированность";
-            this.RBPartialSortMass.UseVisualStyleBackColor = true;
+            this.RBSortMass.AutoSize = true;
+            this.RBSortMass.Location = new System.Drawing.Point(121, 3);
+            this.RBSortMass.Name = "RBSortMass";
+            this.RBSortMass.Size = new System.Drawing.Size(158, 17);
+            this.RBSortMass.TabIndex = 22;
+            this.RBSortMass.TabStop = true;
+            this.RBSortMass.Text = "Отсортированный массив";
+            this.RBSortMass.UseVisualStyleBackColor = true;
             // 
-            // radioButton6
+            // RBChangeInPermutation
             // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(3, 26);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(166, 17);
-            this.radioButton6.TabIndex = 24;
-            this.radioButton6.TabStop = true;
-            this.radioButton6.Text = "Изменения в перестановке";
-            this.radioButton6.UseVisualStyleBackColor = true;
+            this.RBChangeInPermutation.AutoSize = true;
+            this.RBChangeInPermutation.Location = new System.Drawing.Point(3, 26);
+            this.RBChangeInPermutation.Name = "RBChangeInPermutation";
+            this.RBChangeInPermutation.Size = new System.Drawing.Size(166, 17);
+            this.RBChangeInPermutation.TabIndex = 24;
+            this.RBChangeInPermutation.TabStop = true;
+            this.RBChangeInPermutation.Text = "Изменения в перестановке";
+            this.RBChangeInPermutation.UseVisualStyleBackColor = true;
             // 
             // RBSwapsMass
             // 
@@ -427,7 +432,7 @@
             this.RBNum100000.Name = "RBNum100000";
             this.RBNum100000.Size = new System.Drawing.Size(49, 17);
             this.RBNum100000.TabIndex = 20;
-            this.RBNum100000.Text = "10^4";
+            this.RBNum100000.Text = "10^5";
             this.RBNum100000.UseVisualStyleBackColor = true;
             // 
             // RBNum1000000
@@ -438,7 +443,7 @@
             this.RBNum1000000.Size = new System.Drawing.Size(49, 17);
             this.RBNum1000000.TabIndex = 21;
             this.RBNum1000000.TabStop = true;
-            this.RBNum1000000.Text = "10^5";
+            this.RBNum1000000.Text = "10^6";
             this.RBNum1000000.UseVisualStyleBackColor = true;
             // 
             // labelTypeData
@@ -458,11 +463,41 @@
             this.BWShakerSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BWShakerSort_ProgressChanged);
             this.BWShakerSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BWShakerSort_RunWorkerCompleted);
             // 
+            // RBReverseSortMass
+            // 
+            this.RBReverseSortMass.AutoSize = true;
+            this.RBReverseSortMass.Location = new System.Drawing.Point(285, 3);
+            this.RBReverseSortMass.Name = "RBReverseSortMass";
+            this.RBReverseSortMass.Size = new System.Drawing.Size(161, 17);
+            this.RBReverseSortMass.TabIndex = 26;
+            this.RBReverseSortMass.TabStop = true;
+            this.RBReverseSortMass.Text = "Обратно отсортированный";
+            this.RBReverseSortMass.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(27, 21);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Location = new System.Drawing.Point(710, 210);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(126, 231);
+            this.panel1.TabIndex = 19;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 473);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelResult);
             this.Name = "Form1";
@@ -476,6 +511,7 @@
             this.flowLayoutPanel2.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -504,14 +540,14 @@
         private System.Windows.Forms.RadioButton RBNum10000;
         private System.Windows.Forms.RadioButton RBNum1000;
         private System.Windows.Forms.RadioButton RBNum100000;
-        private System.Windows.Forms.Label LabelShakerSort;
+        private System.Windows.Forms.Label labelProgressShakerSort;
         private System.Windows.Forms.ListBox LBShakerSort;
         private System.Windows.Forms.ProgressBar ProgressBarShakerSort;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label labelShakerSort;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.RadioButton RBRandomNum;
-        private System.Windows.Forms.RadioButton RBPartialSortMass;
-        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton RBSortMass;
+        private System.Windows.Forms.RadioButton RBChangeInPermutation;
         private System.Windows.Forms.RadioButton RBSwapsMass;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton RBNum1000000;
@@ -522,6 +558,9 @@
         protected System.ComponentModel.BackgroundWorker BWInsertSort;
         protected System.ComponentModel.BackgroundWorker BWSelectSort;
         protected System.ComponentModel.BackgroundWorker BWShakerSort;
+        private System.Windows.Forms.RadioButton RBReverseSortMass;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
