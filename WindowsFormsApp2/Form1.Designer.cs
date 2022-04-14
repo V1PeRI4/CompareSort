@@ -59,6 +59,7 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.RBRandomNum = new System.Windows.Forms.RadioButton();
             this.RBSortMass = new System.Windows.Forms.RadioButton();
+            this.RBReverseSortMass = new System.Windows.Forms.RadioButton();
             this.RBChangeInPermutation = new System.Windows.Forms.RadioButton();
             this.RBSwapsMass = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -68,7 +69,6 @@
             this.RBNum1000000 = new System.Windows.Forms.RadioButton();
             this.labelTypeData = new System.Windows.Forms.Label();
             this.BWShakerSort = new System.ComponentModel.BackgroundWorker();
-            this.RBReverseSortMass = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelResult.SuspendLayout();
@@ -372,6 +372,17 @@
             this.RBSortMass.Text = "Отсортированный массив";
             this.RBSortMass.UseVisualStyleBackColor = true;
             // 
+            // RBReverseSortMass
+            // 
+            this.RBReverseSortMass.AutoSize = true;
+            this.RBReverseSortMass.Location = new System.Drawing.Point(285, 3);
+            this.RBReverseSortMass.Name = "RBReverseSortMass";
+            this.RBReverseSortMass.Size = new System.Drawing.Size(161, 17);
+            this.RBReverseSortMass.TabIndex = 26;
+            this.RBReverseSortMass.TabStop = true;
+            this.RBReverseSortMass.Text = "Обратно отсортированный";
+            this.RBReverseSortMass.UseVisualStyleBackColor = true;
+            // 
             // RBChangeInPermutation
             // 
             this.RBChangeInPermutation.AutoSize = true;
@@ -463,24 +474,13 @@
             this.BWShakerSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BWShakerSort_ProgressChanged);
             this.BWShakerSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BWShakerSort_RunWorkerCompleted);
             // 
-            // RBReverseSortMass
-            // 
-            this.RBReverseSortMass.AutoSize = true;
-            this.RBReverseSortMass.Location = new System.Drawing.Point(285, 3);
-            this.RBReverseSortMass.Name = "RBReverseSortMass";
-            this.RBReverseSortMass.Size = new System.Drawing.Size(161, 17);
-            this.RBReverseSortMass.TabIndex = 26;
-            this.RBReverseSortMass.TabStop = true;
-            this.RBReverseSortMass.Text = "Обратно отсортированный";
-            this.RBReverseSortMass.UseVisualStyleBackColor = true;
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(27, 21);
+            this.button1.Location = new System.Drawing.Point(24, 11);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(87, 42);
             this.button1.TabIndex = 20;
-            this.button1.Text = "button1";
+            this.button1.Text = "Справка по сортировкам";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
