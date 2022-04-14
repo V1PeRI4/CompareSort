@@ -143,12 +143,11 @@ namespace WindowsFormsApp2
         // Получение количества элементов в массиве
         private int GetMassLenght()
         {
-            int n;
+            int n = 0;
             if (RBNum1000.Checked == true) { n = 1000; }
-            else if (RBNum10000.Checked == true) { n = 10000; }
-            else if (RBNum100000.Checked == true) { n = 100000; }
-            else if (RBNum1000000.Checked == true) { n = 1000000; }
-            else { n = 0; }
+            if (RBNum10000.Checked == true) { n = 10000; }
+            if (RBNum100000.Checked == true) { n = 100000; }
+            if (RBNum1000000.Checked == true) { n = 1000000; }
             return n;
         }
 
@@ -156,30 +155,23 @@ namespace WindowsFormsApp2
         {
             Random rnd = new Random();
 
-            if (RBRandomNum.Checked == true) 
-            {
+            if (CBSelectSort.SelectedItem.ToString() == "123") 
                 for (int i = 0; i < array.Length; i++)
-                {
                     array[i] = rnd.Next(1, array.Length);
-                }
-            }
-            else if (RBSortMass.Checked == true) 
-            {
+
+            if (RBSortMass.Checked == true) 
                 for (int i = 0; i < array.Length; i++)
                     array[i] = i;
-            }
-            else if (RBReverseSortMass.Checked == true) 
-            {
-                for (int i = 0; i < array.Length; i++)
-                    array[i] = array.Length - i;
-            }
-            else if (RBChangeInPermutation.Checked == true)
-            {
-                for (int i = 0; i < array.Length; i++)
-                    array[i] = array.Length - i;
-            }
 
-            else if (RBSwapsMass.Checked == true) 
+            if (RBReverseSortMass.Checked == true) 
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = array.Length - i;
+
+            if (RBChangeInPermutation.Checked == true)
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = array.Length - i;
+
+            if (RBSwapsMass.Checked == true) 
             {
                 for (int i = 1; i < array.Length; i++)
                 {
@@ -193,16 +185,6 @@ namespace WindowsFormsApp2
 
             return array;
         }
-
-
-        private void SwapElMass(int el1, int el2)
-        {
-            int temp;
-            temp = el1;
-            el1 = el2;
-            el2 = temp;
-        }
-
 
         private void ViewProgressChange(BackgroundWorker backgroundWorker, int[] array, int i)
         {
@@ -520,6 +502,11 @@ namespace WindowsFormsApp2
         {
             Info info = new Info();
             info.Show();
+
+        }
+
+        private void labelBubbleSort_Click(object sender, EventArgs e)
+        {
 
         }
     }
