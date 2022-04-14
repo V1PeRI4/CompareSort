@@ -51,18 +51,13 @@
             this.panelResult = new System.Windows.Forms.Panel();
             this.labelProgressShakerSort = new System.Windows.Forms.Label();
             this.LBShakerSort = new System.Windows.Forms.ListBox();
-            this.ProgressBarShakerSort = new System.Windows.Forms.ProgressBar();
             this.labelShakerSort = new System.Windows.Forms.Label();
+            this.ProgressBarShakerSort = new System.Windows.Forms.ProgressBar();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.CBSelectSort = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.CBChooseSort = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnClearListBox = new System.Windows.Forms.Button();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.RBRandomNum = new System.Windows.Forms.RadioButton();
-            this.RBSortMass = new System.Windows.Forms.RadioButton();
-            this.RBReverseSortMass = new System.Windows.Forms.RadioButton();
-            this.RBChangeInPermutation = new System.Windows.Forms.RadioButton();
-            this.RBSwapsMass = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.RBNum1000 = new System.Windows.Forms.RadioButton();
             this.RBNum10000 = new System.Windows.Forms.RadioButton();
@@ -70,11 +65,9 @@
             this.RBNum1000000 = new System.Windows.Forms.RadioButton();
             this.labelTypeData = new System.Windows.Forms.Label();
             this.BWShakerSort = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelResult.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,7 +277,7 @@
             this.panelResult.Controls.Add(this.ProgressBarBubbleSort);
             this.panelResult.Controls.Add(this.LBBubbleSort);
             this.panelResult.Controls.Add(this.LBInsertSort);
-            this.panelResult.Location = new System.Drawing.Point(14, 256);
+            this.panelResult.Location = new System.Drawing.Point(14, 220);
             this.panelResult.Name = "panelResult";
             this.panelResult.Size = new System.Drawing.Size(851, 231);
             this.panelResult.TabIndex = 17;
@@ -309,13 +302,6 @@
             this.LBShakerSort.Size = new System.Drawing.Size(120, 84);
             this.LBShakerSort.TabIndex = 18;
             // 
-            // ProgressBarShakerSort
-            // 
-            this.ProgressBarShakerSort.Location = new System.Drawing.Point(681, 148);
-            this.ProgressBarShakerSort.Name = "ProgressBarShakerSort";
-            this.ProgressBarShakerSort.Size = new System.Drawing.Size(120, 32);
-            this.ProgressBarShakerSort.TabIndex = 19;
-            // 
             // labelShakerSort
             // 
             this.labelShakerSort.AutoSize = true;
@@ -326,10 +312,17 @@
             this.labelShakerSort.TabIndex = 16;
             this.labelShakerSort.Text = "Шейкерная сортировка";
             // 
+            // ProgressBarShakerSort
+            // 
+            this.ProgressBarShakerSort.Location = new System.Drawing.Point(681, 148);
+            this.ProgressBarShakerSort.Name = "ProgressBarShakerSort";
+            this.ProgressBarShakerSort.Size = new System.Drawing.Size(120, 32);
+            this.ProgressBarShakerSort.TabIndex = 19;
+            // 
             // panelMain
             // 
             this.panelMain.Controls.Add(this.button1);
-            this.panelMain.Controls.Add(this.CBSelectSort);
+            this.panelMain.Controls.Add(this.CBChooseSort);
             this.panelMain.Controls.Add(this.flowLayoutPanel3);
             this.panelMain.Controls.Add(this.flowLayoutPanel1);
             this.panelMain.Controls.Add(this.labelTypeData);
@@ -339,21 +332,33 @@
             this.panelMain.Size = new System.Drawing.Size(851, 204);
             this.panelMain.TabIndex = 18;
             // 
-            // CBSelectSort
+            // button1
             // 
-            this.CBSelectSort.BackColor = System.Drawing.SystemColors.MenuBar;
-            this.CBSelectSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.CBSelectSort.FormattingEnabled = true;
-            this.CBSelectSort.Items.AddRange(new object[] {
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.button1.Location = new System.Drawing.Point(701, 105);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(127, 61);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "Справка по сортировкам";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // CBChooseSort
+            // 
+            this.CBChooseSort.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.CBChooseSort.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.CBChooseSort.FormattingEnabled = true;
+            this.CBChooseSort.Items.AddRange(new object[] {
             "Случайные числа",
             "Отсортированный массив",
             "Обратно отсортированный",
             "Изменения в перестановке",
             "Свопы"});
-            this.CBSelectSort.Location = new System.Drawing.Point(339, 58);
-            this.CBSelectSort.Name = "CBSelectSort";
-            this.CBSelectSort.Size = new System.Drawing.Size(359, 28);
-            this.CBSelectSort.TabIndex = 30;
+            this.CBChooseSort.Location = new System.Drawing.Point(339, 58);
+            this.CBChooseSort.Name = "CBChooseSort";
+            this.CBChooseSort.Size = new System.Drawing.Size(359, 28);
+            this.CBChooseSort.TabIndex = 30;
+            this.CBChooseSort.SelectedIndexChanged += new System.EventHandler(this.CBChooseSort_SelectedIndexChanged);
             // 
             // flowLayoutPanel3
             // 
@@ -376,78 +381,6 @@
             this.btnClearListBox.Text = "Очистить списки результатов";
             this.btnClearListBox.UseVisualStyleBackColor = true;
             this.btnClearListBox.Click += new System.EventHandler(this.btnClearListBox_Click);
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.RBRandomNum);
-            this.flowLayoutPanel2.Controls.Add(this.RBSortMass);
-            this.flowLayoutPanel2.Controls.Add(this.RBReverseSortMass);
-            this.flowLayoutPanel2.Controls.Add(this.RBChangeInPermutation);
-            this.flowLayoutPanel2.Controls.Add(this.RBSwapsMass);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(891, 111);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(535, 105);
-            this.flowLayoutPanel2.TabIndex = 28;
-            // 
-            // RBRandomNum
-            // 
-            this.RBRandomNum.AutoSize = true;
-            this.RBRandomNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.RBRandomNum.Location = new System.Drawing.Point(3, 3);
-            this.RBRandomNum.Name = "RBRandomNum";
-            this.RBRandomNum.Size = new System.Drawing.Size(112, 17);
-            this.RBRandomNum.TabIndex = 23;
-            this.RBRandomNum.TabStop = true;
-            this.RBRandomNum.Text = "Случайные числа";
-            this.RBRandomNum.UseVisualStyleBackColor = true;
-            // 
-            // RBSortMass
-            // 
-            this.RBSortMass.AutoSize = true;
-            this.RBSortMass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.RBSortMass.Location = new System.Drawing.Point(121, 3);
-            this.RBSortMass.Name = "RBSortMass";
-            this.RBSortMass.Size = new System.Drawing.Size(158, 17);
-            this.RBSortMass.TabIndex = 22;
-            this.RBSortMass.TabStop = true;
-            this.RBSortMass.Text = "Отсортированный массив";
-            this.RBSortMass.UseVisualStyleBackColor = true;
-            // 
-            // RBReverseSortMass
-            // 
-            this.RBReverseSortMass.AutoSize = true;
-            this.RBReverseSortMass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.RBReverseSortMass.Location = new System.Drawing.Point(285, 3);
-            this.RBReverseSortMass.Name = "RBReverseSortMass";
-            this.RBReverseSortMass.Size = new System.Drawing.Size(161, 17);
-            this.RBReverseSortMass.TabIndex = 26;
-            this.RBReverseSortMass.TabStop = true;
-            this.RBReverseSortMass.Text = "Обратно отсортированный";
-            this.RBReverseSortMass.UseVisualStyleBackColor = true;
-            // 
-            // RBChangeInPermutation
-            // 
-            this.RBChangeInPermutation.AutoSize = true;
-            this.RBChangeInPermutation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.RBChangeInPermutation.Location = new System.Drawing.Point(3, 26);
-            this.RBChangeInPermutation.Name = "RBChangeInPermutation";
-            this.RBChangeInPermutation.Size = new System.Drawing.Size(166, 17);
-            this.RBChangeInPermutation.TabIndex = 24;
-            this.RBChangeInPermutation.TabStop = true;
-            this.RBChangeInPermutation.Text = "Изменения в перестановке";
-            this.RBChangeInPermutation.UseVisualStyleBackColor = true;
-            // 
-            // RBSwapsMass
-            // 
-            this.RBSwapsMass.AutoSize = true;
-            this.RBSwapsMass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            this.RBSwapsMass.Location = new System.Drawing.Point(175, 26);
-            this.RBSwapsMass.Name = "RBSwapsMass";
-            this.RBSwapsMass.Size = new System.Drawing.Size(58, 17);
-            this.RBSwapsMass.TabIndex = 25;
-            this.RBSwapsMass.TabStop = true;
-            this.RBSwapsMass.Text = "Свопы";
-            this.RBSwapsMass.UseVisualStyleBackColor = true;
             // 
             // flowLayoutPanel1
             // 
@@ -523,25 +456,14 @@
             this.BWShakerSort.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BWShakerSort_ProgressChanged);
             this.BWShakerSort.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BWShakerSort_RunWorkerCompleted);
             // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button1.Location = new System.Drawing.Point(701, 105);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(127, 61);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "Справка по сортировкам";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1417, 509);
+            this.ClientSize = new System.Drawing.Size(879, 473);
             this.Controls.Add(this.panelMain);
-            this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.panelResult);
+            this.MaximumSize = new System.Drawing.Size(971, 651);
             this.MinimumSize = new System.Drawing.Size(895, 512);
             this.Name = "Form1";
             this.Text = "Сортировка массивов";
@@ -550,8 +472,6 @@
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -586,11 +506,6 @@
         private System.Windows.Forms.ListBox LBShakerSort;
         private System.Windows.Forms.ProgressBar ProgressBarShakerSort;
         private System.Windows.Forms.Label labelShakerSort;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.RadioButton RBRandomNum;
-        private System.Windows.Forms.RadioButton RBSortMass;
-        private System.Windows.Forms.RadioButton RBChangeInPermutation;
-        private System.Windows.Forms.RadioButton RBSwapsMass;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton RBNum1000000;
         private System.Windows.Forms.Label labelTypeData;
@@ -600,9 +515,8 @@
         protected System.ComponentModel.BackgroundWorker BWInsertSort;
         protected System.ComponentModel.BackgroundWorker BWSelectSort;
         protected System.ComponentModel.BackgroundWorker BWShakerSort;
-        private System.Windows.Forms.RadioButton RBReverseSortMass;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox CBSelectSort;
+        private System.Windows.Forms.ComboBox CBChooseSort;
     }
 }
 

@@ -32,6 +32,9 @@ namespace WindowsFormsApp2
         protected bool fCancelShakerSort = false;
 
 
+        private int IndexCBChooseSort = 0;
+
+
 
         /*--------------------------Обьявление формы--------------------------*/
 
@@ -155,35 +158,39 @@ namespace WindowsFormsApp2
         {
             Random rnd = new Random();
 
-            if (CBSelectSort.SelectedItem.ToString() == "123") 
+
+
+            if (IndexCBChooseSort == 0) 
                 for (int i = 0; i < array.Length; i++)
                     array[i] = rnd.Next(1, array.Length);
 
-            if (RBSortMass.Checked == true) 
+            if (IndexCBChooseSort == 1) 
                 for (int i = 0; i < array.Length; i++)
                     array[i] = i;
 
-            if (RBReverseSortMass.Checked == true) 
+            if (IndexCBChooseSort == 2) 
                 for (int i = 0; i < array.Length; i++)
                     array[i] = array.Length - i;
 
-            if (RBChangeInPermutation.Checked == true)
+            if (IndexCBChooseSort == 3)
                 for (int i = 0; i < array.Length; i++)
                     array[i] = array.Length - i;
 
-            if (RBSwapsMass.Checked == true) 
+            if (IndexCBChooseSort == 4) 
             {
                 for (int i = 1; i < array.Length; i++)
                 {
                     array[i] = rnd.Next(1, array.Length);
-                    if (array[i] % 3 == 0)
-                    {
-                        array[i - 1] = array[i];
-                    }
+                    if (array[i] % 3 == 0) array[i - 1] = array[i];
                 }
             }
 
             return array;
+        }
+
+        private void CBChooseSort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IndexCBChooseSort = CBChooseSort.SelectedIndex;
         }
 
         private void ViewProgressChange(BackgroundWorker backgroundWorker, int[] array, int i)
@@ -509,5 +516,7 @@ namespace WindowsFormsApp2
         {
 
         }
+
+        
     }
 }
